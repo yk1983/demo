@@ -1,3 +1,9 @@
+app:
+    name: HelloApp
+    version: 1.0.0
+    author:
+        name: Tester
+        email: tester@domain.com
 spring:
     profiles:
         active: local
