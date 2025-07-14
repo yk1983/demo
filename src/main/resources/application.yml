@@ -4,10 +4,24 @@ app:
     author:
         name: Tester
         email: tester@domain.com
+server:
+    port: 8080
 spring:
     profiles:
         active: local
     application:
         name: demo
-server:
-    port: 8080
+    # DATABASE(POSTGRESQL)
+    datasource:
+        url: jdbc:postgresql://localhost:5432/dslab
+        username: system
+        password: pass
+        driver-class-name: org.postgresql.Driver
+    # JPA
+    jpa:
+        hibernate:
+            ddl-auto: validate  # 또는 create, create-drop, update
+        show-sql: true
+        properties:
+            hibernate:
+                format_sql: true

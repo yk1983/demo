@@ -2,6 +2,8 @@ package com.example.demo.common.domain.response;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,4 +19,8 @@ public class BaseResponse<T> {
     private String message;
     /** 응답 객체 데이터 */
     private T data;
+    /** 페이징 객체 (선택) */
+    private PageInfo page;
+    /** 유효성 오류 정보 (선택) */
+    private List<FieldErrorDetail> errors;
 }

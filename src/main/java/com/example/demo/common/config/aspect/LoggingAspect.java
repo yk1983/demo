@@ -1,4 +1,4 @@
-package com.example.demo.common.aspect;
+package com.example.demo.common.config.aspect;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
