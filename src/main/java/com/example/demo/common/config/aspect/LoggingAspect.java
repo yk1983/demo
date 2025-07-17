@@ -1,79 +1,71 @@
 package com.example.demo.common.config.aspect;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.http.ResponseEntity;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class LoggingAspect {
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
-    @Pointcut("execution(* com.example..controller..*(..))")
-    public void controllerMethods() {}
-
-    @Around("controllerMethods()")
-    public Object logRequestResponse(ProceedingJoinPoint joinPoint) throws Throwable {
-        HttpServletRequest request = getCurrentHttpRequest();
-        if (request == null) return joinPoint.proceed();
-
-        String requestUri = request.getRequestURI();
-        String httpMethod = request.getMethod();
-        String queryString = request.getQueryString();
-        String requestBody = extractRequestBody(joinPoint.getArgs());
-
-        log.info("🌐 REQUEST [{} {}] {}", httpMethod, requestUri, queryString != null ? "?" + queryString : "");
-        log.info("📦 Request Body: {}", requestBody);
+    @Around("execution(* com.example.demo..controller..*(..))")
+    public Object logController(ProceedingJoinPoint joinPoint) throws Throwable {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 
         long start = System.currentTimeMillis();
-        Object result = null;
-        try {
-            result = joinPoint.proceed();
-            long end = System.currentTimeMillis();
-            long duration = end - start;
+        String method = request.getMethod();
+        String uri = request.getRequestURI();
 
-            log.info("✅ RESPONSE [{} {}] ({}ms)", httpMethod, requestUri, duration);
-            if (result instanceof ResponseEntity<?> responseEntity) {
-                log.info("✅ ResponseEntity: {}", objectMapper.writeValueAsString(responseEntity.getBody()));
-            } else {
-                log.info("✅ Result: {}", objectMapper.writeValueAsString(result));
-            }
-            return result;
-        } catch (Throwable ex) {
-            log.error("❌ EXCEPTION [{} {}] - {}", httpMethod, requestUri, ex.getMessage(), ex);
-            throw ex;
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        String handlerName = signature.getDeclaringType().getSimpleName() + "." + signature.getMethod().getName() + "()";
+
+        Object[] args = joinPoint.getArgs();
+        String requestBody = extractRequestBody(args);
+
+        log.info("│   📂 Handler     : {}", handlerName);
+        log.info("│   📨 RequestBody : {}", requestBody);
+
+        Object result = joinPoint.proceed();
+
+        long elapsed = System.currentTimeMillis() - start;
+        request.setAttribute("elapsedTime", elapsed);
+
+        if (result instanceof String viewName) {
+            log.info("│   🎯 ViewName    : {}", viewName);
+        } else {
+            log.info("│   ✅ Result      : {}", result != null ? result.getClass().getSimpleName() : "null");
         }
-    }
 
-    private HttpServletRequest getCurrentHttpRequest() {
-        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        return (attr != null) ? attr.getRequest() : null;
+        return result;
     }
 
     private String extractRequestBody(Object[] args) {
         return Arrays.stream(args)
-                .filter(arg -> !(arg instanceof HttpServletRequest) && !(arg instanceof HttpServletResponse))
+                .filter(arg ->
+                        !(arg instanceof HttpServletRequest || arg instanceof HttpServletResponse || arg instanceof BindingResult)
+                )
+                .findFirst()
                 .map(arg -> {
                     try {
                         return objectMapper.writeValueAsString(arg);
-                    } catch (JsonProcessingException e) {
-                        return "[unserializable]";
+                    } catch (Exception e) {
+                        return arg.toString();
                     }
-                })
-                .collect(Collectors.joining(", "));
+                }).orElse("(none)");
     }
 }

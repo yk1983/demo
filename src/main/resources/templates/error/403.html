@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>403 - 접근 거부</title>
+    <style>
+        body { font-family: Arial; background: #f4f4f4; padding: 40px; }
+        .card { max-width: 600px; margin: auto; background: white; padding: 25px; border-radius: 10px; text-align: center; }
+        h1 { color: #c0392b; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>403 - 접근이 거부되었습니다</h1>
+    <p>해당 페이지에 접근할 권한이 없습니다.</p>
+    <p th:text="'요청 경로: ' + ${path}">요청 경로 정보</p>
+</div>
+</body>
+</html>

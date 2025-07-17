@@ -1,8 +1,8 @@
 package com.example.demo.common.util;
 
-import com.example.demo.common.domain.response.BaseResponse;
-import com.example.demo.common.domain.response.FieldErrorDetail;
-import com.example.demo.common.domain.response.PageInfo;
+import com.example.demo.common.response.BaseResponse;
+import com.example.demo.common.response.FieldErrorDetail;
+import com.example.demo.common.response.PageInfo;
 
 import java.util.List;
 

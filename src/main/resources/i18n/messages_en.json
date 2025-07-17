@@ -1,0 +1,7 @@
+{
+    "UNAUTHORIZED": "??? ?????.",
+    "ACCESS_DENIED": "?? ??? ????.",
+    "GREETING": "Hello!",
+    "DUPLICATED_EMAIL": "Email already in use.",
+    "USER_NOT_FOUND": "User not found."
+}

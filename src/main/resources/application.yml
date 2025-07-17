@@ -6,22 +6,51 @@ app:
         email: tester@domain.com
 server:
     port: 8080
+    error: # error 또는 exception
+        whitelabel:
+            enabled: false # 기본 에러 페이지 비활성화
+        include-message: always
+        include-binding-errors: always
+        include-exception: true
+        include-stacktrace: on_param
+        #path: /custom-error # /error 대신 커스텀 경로 설정
 spring:
     profiles:
         active: local
     application:
         name: demo
-    # DATABASE(POSTGRESQL)
-    datasource:
-        url: jdbc:postgresql://localhost:5432/dslab
+    web:
+        resources:
+            add-mappings: true # 필요 시 설정 (404 페이지를 직접 처리하려면 다음 설정을 비활성화)
+    mvc:
+        static-path-pattern: /static/**
+    thymeleaf: # thymeleaf 설정
+        enabled: true
+    datasource: # database (postgresql)
+        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+        url: jdbc:log4jdbc:postgresql://localhost:5432/dslab
         username: system
         password: pass
-        driver-class-name: org.postgresql.Driver
-    # JPA
-    jpa:
+    h2:
+        console:
+            enabled: true
+    jpa: # jpa
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        show-sql: true
         hibernate:
             ddl-auto: validate  # 또는 create, create-drop, update
-        show-sql: true
         properties:
             hibernate:
                 format_sql: true
+    messages:
+        encoding: UTF-8
+        basename: messages, error
+springdoc:
+    swagger-ui:
+        path: /swagger-ui.html
+        display-request-duration: true
+        operations-sorter: method
+    default-produces-media-type: application/json
+    default-consumes-media-type: application/json
+    api-docs:
+        path: /v3/api-docs

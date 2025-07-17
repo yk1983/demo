@@ -1,10 +1,9 @@
-package com.example.demo.sample.controller;
+package com.example.demo.sample.controller.api;
 
-import com.example.demo.common.domain.response.BaseResponse;
+import com.example.demo.common.response.BaseResponse;
 import com.example.demo.common.util.ResponseUtil;
 import com.example.demo.sample.domain.dto.CommonCodeDetailDto;
 import com.example.demo.sample.domain.dto.CommonCodeMasterDto;
-import com.example.demo.sample.domain.entity.CommonCodeDetail;
 import com.example.demo.sample.service.CommonCodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

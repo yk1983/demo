@@ -3,6 +3,7 @@ package com.example.demo.common.config.interceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,7 +15,13 @@ public class LoggingInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) throws Exception {
-        log.debug("📌 Request URI: {}", request.getRequestURI());
+        if (request.getRequestURI().startsWith("/css") ||
+                request.getRequestURI().startsWith("/js") ||
+                request.getRequestURI().startsWith("/images") ||
+                request.getRequestURI().startsWith("/favicon.ico")) {
+            return true; // skip logging
+        }
+        log.info("➡️  [{}] {}", request.getMethod(), request.getRequestURI());
         return true; // false면 요청 중단
     }
 
@@ -23,7 +30,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
                            HttpServletResponse response,
                            Object handler,
                            ModelAndView modelAndView) throws Exception {
-        log.debug("✅ Controller 실행 후 처리");
+        log.debug("✅  Controller 실행 후 처리");
     }
 
     @Override
@@ -31,6 +38,11 @@ public class LoggingInterceptor implements HandlerInterceptor {
                                 HttpServletResponse response,
                                 Object handler,
                                 Exception ex) throws Exception {
-        log.debug("🔚 View 렌더링 후 실행");
+        log.info("⬅️  [{} {}] {} ({}ms)",
+                response.getStatus(),
+                HttpStatus.valueOf(response.getStatus()).getReasonPhrase(),
+                request.getRequestURI(),
+                request.getAttribute("elapsedTime")
+        );
     }
 }

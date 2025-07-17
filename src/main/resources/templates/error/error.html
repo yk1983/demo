@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>오류 발생</title>
+    <style>
+        body { font-family: sans-serif; background: #f9f9f9; padding: 30px; }
+        .container { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h1 { color: #34495e; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>문제가 발생했습니다</h1>
+    <p th:text="'에러 메시지: ' + ${message}">에러 메시지</p>
+    <p th:text="'요청 경로: ' + ${path}">요청 경로</p>
+    <p th:text="'에러 상태: ' + ${status}">에러 코드</p>
+    <p th:text="'시간: ' + ${timestamp}">에러 발생 시간</p>
+</div>
+</body>
+</html>

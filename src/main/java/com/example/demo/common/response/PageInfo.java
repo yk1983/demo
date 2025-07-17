@@ -1,4 +1,4 @@
-package com.example.demo.common.domain.response;
+package com.example.demo.common.response;
 
 import lombok.*;
 
