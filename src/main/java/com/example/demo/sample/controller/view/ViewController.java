@@ -17,4 +17,7 @@ public class ViewController {
 
     @GetMapping("/join")
     public String join() { return "demo/join"; }
+
+    @GetMapping("/dashboard")
+    public String dashboard() { return "demo/hello"; }
 }

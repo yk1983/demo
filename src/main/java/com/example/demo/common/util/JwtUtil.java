@@ -1,4 +1,4 @@
-package com.example.demo.common.provider;
+package com.example.demo.common.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -11,7 +11,7 @@ import java.security.Key;
 import java.util.Date;
 
 @Component
-public class JwtTokenProvider {
+public class JwtUtil {
     /** 시크릿 키는 최소 256비트 이상이어야 함 (HS256 기준) */
     private final Key SECRET_KEY = Keys.hmacShaKeyFor("YourSecretKeyMustBeAtLeast256BitsLongForHS256".getBytes(StandardCharsets.UTF_8));
     private final long EXPIRATION_MS = 1000 * 60 * 60; // 1시간 유효

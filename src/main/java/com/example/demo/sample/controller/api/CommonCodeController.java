@@ -1,7 +1,6 @@
 package com.example.demo.sample.controller.api;
 
 import com.example.demo.common.response.BaseResponse;
-import com.example.demo.common.util.ResponseUtil;
 import com.example.demo.sample.domain.dto.CommonCodeDetailDto;
 import com.example.demo.sample.domain.dto.CommonCodeMasterDto;
 import com.example.demo.sample.service.CommonCodeService;
@@ -23,14 +22,14 @@ public class CommonCodeController {
     @GetMapping
     public ResponseEntity<BaseResponse<List<CommonCodeMasterDto>>> getCommonCodeMasterList() {
         List<CommonCodeMasterDto> result = commonCodeService.getCommonCodeMasterList();
-        return ResponseEntity.ok(ResponseUtil.success(result));
+        return ResponseEntity.ok(BaseResponse.success(result));
     }
 
     @GetMapping("/{group}")
     public ResponseEntity<BaseResponse<List<CommonCodeDetailDto>>> getCommonCodeDetailList(
             @PathVariable String group) {
         List<CommonCodeDetailDto> result = commonCodeService.getCommonCodeDetailList(group);
-        return ResponseEntity.ok(ResponseUtil.success(result));
+        return ResponseEntity.ok(BaseResponse.success(result));
     }
 
     @GetMapping("/{group}/{code}")
@@ -38,6 +37,6 @@ public class CommonCodeController {
             @PathVariable String group,
             @PathVariable String code) {
         CommonCodeDetailDto result = commonCodeService.getCommonCodeDetail(group, code);
-        return ResponseEntity.ok(ResponseUtil.success(result));
+        return ResponseEntity.ok(BaseResponse.success(result));
     }
 }

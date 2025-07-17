@@ -22,9 +22,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findByUsername(email)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + email));
 
-        // 비밀번호는 UserDetails 내부에서 직접 엔티티로 접근하거나 다른 방식으로 처리 가능
+        // TODO: 비밀번호는 UserDetails 내부에서 직접 엔티티로 접근하거나 다른 방식으로 처리 가능
         UserResponseDto userDto = UserMapper.toDto(user);
 
-        return null;
+        return user;
     }
 }
