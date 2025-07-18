@@ -23,6 +23,7 @@ spring:
         resources:
             add-mappings: true # 필요 시 설정 (404 페이지를 직접 처리하려면 다음 설정을 비활성화)
     mvc:
+        throw-exception-if-no-handler-found: true
         static-path-pattern: /static/**
     thymeleaf: # thymeleaf 설정
         enabled: true

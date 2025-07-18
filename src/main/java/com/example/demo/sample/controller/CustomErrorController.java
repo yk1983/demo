@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.LocalDateTime;
 
 @Controller
-@RequestMapping("${server.error.path:${error.path:/error}}")
+@RequestMapping("/error")
 public class CustomErrorController implements ErrorController {
 
     @RequestMapping
