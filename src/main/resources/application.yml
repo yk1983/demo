@@ -5,7 +5,7 @@ app:
         name: Tester
         email: tester@domain.com
 server:
-    port: 8080
+    port: 9090
     error: # error 또는 exception
         whitelabel:
             enabled: false # 기본 에러 페이지 비활성화
@@ -23,7 +23,6 @@ spring:
         resources:
             add-mappings: true # 필요 시 설정 (404 페이지를 직접 처리하려면 다음 설정을 비활성화)
     mvc:
-        throw-exception-if-no-handler-found: true
         static-path-pattern: /static/**
     thymeleaf: # thymeleaf 설정
         enabled: true

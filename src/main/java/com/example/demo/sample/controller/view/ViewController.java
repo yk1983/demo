@@ -20,7 +20,7 @@ public class ViewController {
 
     @GetMapping("/signup")
     public String join(Model model, Authentication authentication) {
-        // TODO: 인증된 사용자가 /register 접근 시 대시보드로 리다이렉트 처리
+        // TODO: 인증된 사용자가 /signup 접근 시 대시보드로 리다이렉트 처리
         if (authentication != null && authentication.isAuthenticated()) {
             return "redirect:/dashboard";
         }

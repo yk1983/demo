@@ -48,7 +48,7 @@ public class SecurityConfig {
                                         "/swagger-ui/**", "/v3/api-docs/**",
                                         "/login", "/signup", "/auth/**",
                                         "/api/signup"
-                                        ).permitAll() // 인증 없이 접근 가능
+                                ).permitAll() // 인증 없이 접근 가능
                                 .requestMatchers("/signup").anonymous() // 인증된 사용자는 접근 불가
                                 .anyRequest().authenticated() // 나머지는 로그인 필요
                 )

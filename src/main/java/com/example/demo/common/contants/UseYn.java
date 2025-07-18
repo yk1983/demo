@@ -1,5 +1,6 @@
 package com.example.demo.common.contants;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,6 +15,12 @@ public enum UseYn {
     private final String code;
     private final String label;
 
+    /**
+     * 코드로 enum 찾기
+     * @param code 코드
+     * @return Gender
+     */
+    @JsonCreator
     public static UseYn fromCode(String code) {
         return Arrays.stream(UseYn.values())
                 .filter(v -> v.code.equalsIgnoreCase(code))

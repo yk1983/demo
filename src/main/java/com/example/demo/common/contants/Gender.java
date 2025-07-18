@@ -4,23 +4,27 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
+
 @Getter
 @RequiredArgsConstructor
 public enum Gender {
-    MALE("M", "남성", ""),
-    FEMALE("F", "여성", "");
+    MALE("M", "남성"),
+    FEMALE("F", "여성");
 
     private final String code;
-    private final String name;
-    private final String description;
+    private final String label;
 
+    /**
+     * 코드로 enum 찾기
+     * @param code 코드
+     * @return Gender
+     */
     @JsonCreator
-    public static Gender from(String value) {
-        for (Gender gender : Gender.values()) {
-            if (gender.name().equalsIgnoreCase(value) || gender.name.equals(value)) {
-                return gender;
-            }
-        }
-        throw new IllegalArgumentException("성별 값이 잘못되었습니다: " + value);
+    public static Gender fromCode(String code) {
+        return Arrays.stream(Gender.values())
+                .filter(v -> v.code.equalsIgnoreCase(code))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Gender code: " + code));
     }
 }
