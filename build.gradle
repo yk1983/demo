@@ -34,7 +34,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.5' // JJWT 구현체 (암호화, 파싱 등 내부 구현)
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5' // Jackson 기반 파서 (claims를 JSON으로 처리할 경우 필요)
     implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.17.0'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.18.0'
 
     runtimeOnly 'org.postgresql:postgresql'
 

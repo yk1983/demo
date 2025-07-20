@@ -46,11 +46,12 @@ spring:
         encoding: UTF-8
         basename: messages, error
 springdoc:
+    api-docs:
+        path: /v3/api-docs
     swagger-ui:
         path: /swagger-ui.html
         display-request-duration: true
+        tags-sorter: alpha
         operations-sorter: method
     default-produces-media-type: application/json
     default-consumes-media-type: application/json
-    api-docs:
-        path: /v3/api-docs

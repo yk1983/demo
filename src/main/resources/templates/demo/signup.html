@@ -10,7 +10,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <h3 class="text-center mb-4">회원가입</h3>
-                <form id="signupForm" th:action="@{/api/signup}" th:object="${user}" method="post">
+                <form id="signupForm" th:action="@{/api/auth/signup}" th:object="${user}" method="post">
                     <div class="mb-3">
                         <label for="email" class="form-label">이메일</label>
                         <input type="email" id="email" th:field="*{email}" class="form-control" required>
