@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>게시판 등록</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h2 th:text="${isEdit} ? '📝 게시판 수정' : '📝 게시판 등록'"></h2>
+    <form th:action="${isEdit} ? @{/api/bbs/update/{id}(id=${bbs.pstSn})} : @{/api/bbs/create}" th:object="${post}" method="post">
+        <div class="mb-3">
+            <label class="form-label">제목</label>
+            <input type="text" class="form-control" th:field="*{ttl}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">내용</label>
+            <textarea class="form-control" th:field="*{cn}" rows="5" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">작성자</label>
+            <input type="text" class="form-control" th:field="*{wrtr}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">공지여부</label>
+            <select class="form-select" th:field="*{ntcYn}">
+                <option value="N">N</option>
+                <option value="Y">Y</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">게시판 분류번호</label>
+            <input type="number" class="form-control" th:field="*{bbsClsgSn}" required>
+        </div>
+        <button type="submit" class="btn btn-success">저장</button>
+        <a th:href="@{/community}" class="btn btn-secondary">목록</a>
+    </form>
+</div>
+</body>
+</html>

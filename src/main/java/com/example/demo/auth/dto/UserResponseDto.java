@@ -1,4 +1,4 @@
-package com.example.demo.sample.domain.dto;
+package com.example.demo.auth.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;

@@ -37,10 +37,10 @@ public class CommonCodeMaster {
     /** 정렬순서 */
     @Schema(description = "정렬순서", defaultValue = "0", example = "1")
     private Integer sortOrder = 0;
-    /** 생성시각 */
-    @Schema(description = "생성시각", defaultValue = "CURRENT_TIMESTAMP", example = "CURRENT_TIMESTAMP")
+    /** 생성일시 */
+    @Schema(description = "생성일시", defaultValue = "CURRENT_TIMESTAMP", example = "2025-07-16T09:00:00")
     private LocalDateTime createdAt = LocalDateTime.now();
-    /** 수정시각 */
-    @Schema(description = "수정시각", example = "CURRENT_TIMESTAMP")
+    /** 수정일시 */
+    @Schema(description = "수정일시", example = "2025-07-16T09:00:00")
     private LocalDateTime updatedAt;
 }

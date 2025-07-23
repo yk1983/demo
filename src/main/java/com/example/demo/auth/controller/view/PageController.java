@@ -1,4 +1,4 @@
-package com.example.demo.view;
+package com.example.demo.auth.controller.view;
 
 import com.example.demo.auth.dto.SignupRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
-@Controller
+@Controller("authPageController")
 @RequestMapping
 @Schema(description = "회원 관련 View 화면", example = "로그인 / 회원가입 / 비밀번호 찾기 등 ...")
-public class ViewController {
+public class PageController {
     @GetMapping("/signup")
     public String join(Model model, Authentication authentication) {
         // TODO: 인증된 사용자가 /signup 접근 시 대시보드로 리다이렉트 처리

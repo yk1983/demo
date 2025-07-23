@@ -85,7 +85,7 @@ public class SwaggerConfig {
     public GroupedOpenApi apiCommunity() {
         return GroupedOpenApi.builder()
                 .group("3. 커뮤니티") // 그룹 이름
-                .pathsToMatch("/api/community/**")
+                .pathsToMatch("/community/**", "/api/community/**")
                 .build();
     }
 

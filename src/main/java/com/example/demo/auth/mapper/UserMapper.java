@@ -2,7 +2,7 @@ package com.example.demo.auth.mapper;
 
 import com.example.demo.global.util.DateUtil;
 import com.example.demo.auth.dto.SignupRequestDto;
-import com.example.demo.sample.domain.dto.UserResponseDto;
+import com.example.demo.auth.dto.UserResponseDto;
 import com.example.demo.global.entity.User;
 
 public class UserMapper {
