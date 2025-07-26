@@ -3,12 +3,11 @@ package com.example.demo.global.util;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class DateUtil {
     private static final String YYYYMMDD = "yyyyMMdd";
-    private static final DateTimeFormatter YYYY_MM_DD = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final DateTimeFormatter YYYYMMDDHHMMSS = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-
+    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd");
     /**
      * 📖 LocalDate → 문자열 (포맷 지정)
      * @param date 날짜
@@ -49,6 +48,41 @@ public class DateUtil {
     public static String format(LocalDateTime dateTime) {
         if (dateTime == null) return null;
         return format(dateTime, YYYYMMDD);
+    }
+
+    /**
+     * yyyyMMdd 문자열을 구분자(delimiter)로 변경된 포맷으로 변환
+     * @param value     예: 19900101
+     * @param delimiter 예: "-", "/", "."
+     * @return String   예: 1990-01-01, 1990/01/01, 1990.01.01 등
+     * @throws IllegalArgumentException 잘못된 형식 입력 시
+     */
+    public static String formatToDelimitedDate(String value, String delimiter) {
+        if (value == null || value.length() != 8) {
+            throw new IllegalArgumentException("날짜 형식이 잘못되었습니다. yyyyMMdd 형식이어야 합니다.");
+        }
+
+        if (delimiter == null) {
+            delimiter = "-";
+        }
+
+        try {
+            LocalDate date = LocalDate.parse(value, INPUT_FORMAT);
+            String pattern = String.join(delimiter, "yyyy", "MM", "dd");
+            return date.format(DateTimeFormatter.ofPattern(pattern));
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("⚠️ 날짜 파싱 실패: " + value, e);
+        }
+    }
+
+    /**
+     * yyyyMMdd 문자열을 구분자(-)로 변경된 포맷으로 변환
+     * @param value     예: 19900101
+     * @return String   예: 1990-01-01, 1990/01/01, 1990.01.01 등
+     * @throws IllegalArgumentException 잘못된 형식 입력 시
+     */
+    public static String formatToDelimitedDate(String value) {
+        return formatToDelimitedDate(value, "-");
     }
 
     /**

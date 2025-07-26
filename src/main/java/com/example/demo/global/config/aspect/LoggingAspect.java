@@ -11,6 +11,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -25,7 +26,14 @@ public class LoggingAspect {
 
     @Around("execution(* com.example.demo..controller..*(..))")
     public Object logController(ProceedingJoinPoint joinPoint) throws Throwable {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+
+        if (!(requestAttributes instanceof ServletRequestAttributes servletRequestAttributes)) {
+            log.warn("⚠️ HttpServletRequest not available. Skipping logging.");
+            return joinPoint.proceed();
+        }
+
+        HttpServletRequest request = servletRequestAttributes.getRequest();
 
         long start = System.currentTimeMillis();
         String method = request.getMethod();
@@ -55,17 +63,23 @@ public class LoggingAspect {
     }
 
     private String extractRequestBody(Object[] args) {
+        if (args == null || args.length == 0) return "(none)";
+
         return Arrays.stream(args)
                 .filter(arg ->
-                        !(arg instanceof HttpServletRequest || arg instanceof HttpServletResponse || arg instanceof BindingResult)
+                        arg != null &&
+                        !(arg instanceof HttpServletRequest ||
+                                arg instanceof HttpServletResponse ||
+                                arg instanceof BindingResult)
                 )
                 .findFirst()
                 .map(arg -> {
                     try {
                         return objectMapper.writeValueAsString(arg);
                     } catch (Exception e) {
-                        return arg.toString();
+                        return arg.toString(); // JSON 직렬화 실패 시 fallback
                     }
-                }).orElse("(none)");
+                })
+                .orElse("(none)");
     }
 }

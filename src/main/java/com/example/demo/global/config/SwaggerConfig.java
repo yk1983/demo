@@ -54,6 +54,18 @@ public class SwaggerConfig {
     }
 
     /**
+     * 표준사전 API
+     * @return GroupedOpenApi
+     */
+    @Bean
+    public GroupedOpenApi domainApi() {
+        return GroupedOpenApi.builder()
+                .group("0. 표준사전")
+                .pathsToMatch("/api/standard/**")
+                .build();
+    }
+
+    /**
      * 공통 API
      * @return GroupedOpenApi
      */
@@ -61,7 +73,7 @@ public class SwaggerConfig {
     public GroupedOpenApi apiCommon() {
         return GroupedOpenApi.builder()
                 .group("1. 공통") // 그룹 이름 (UI 탭)
-                .pathsToMatch("/api/common/**") // 포함할 API 경로
+                .pathsToMatch("/common/**", "/api/common/**") // 포함할 API 경로
                 .build();
     }
 
@@ -78,13 +90,25 @@ public class SwaggerConfig {
     }
 
     /**
+     * 사용자 관련 API
+     * @return GroupedOpenApi
+     */
+    @Bean
+    public GroupedOpenApi apiUser() {
+        return GroupedOpenApi.builder()
+                .group("3. 사용자") // 그룹 이름
+                .pathsToMatch("/admin/members/**", "/api/members/**")
+                .build();
+    }
+
+    /**
      * 커뮤니티 관련 API
      * @return GroupedOpenApi
      */
     @Bean
     public GroupedOpenApi apiCommunity() {
         return GroupedOpenApi.builder()
-                .group("3. 커뮤니티") // 그룹 이름
+                .group("4. 커뮤니티") // 그룹 이름
                 .pathsToMatch("/community/**", "/api/community/**")
                 .build();
     }

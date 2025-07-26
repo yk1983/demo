@@ -3,7 +3,6 @@ package com.example.demo.community.controller.view;
 import com.example.demo.community.dto.PostDto;
 import com.example.demo.community.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,11 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@Controller("communityPageController")
+@Controller
 @RequestMapping("/community")
 @RequiredArgsConstructor
 @Tag(name = "커뮤니티 관련 VIEW 컨트롤러", description = "게시판 / 공지사항 / 문의 등 ...")
-public class PageController {
+public class CommunityPageController {
 
     private final PostService bbsService;
 

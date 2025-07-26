@@ -17,37 +17,29 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Schema(description = "사용자 정보 엔티티")
 public class User implements UserDetails {
     /** 사용자 고유 ID */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    @Schema(description = "사용자 고유 ID", example = "1")
     private Long userId;
     /** 사용자 이메일 */
     @Column(name = "email", length = 100, nullable = false, unique = true)
-    @Schema(description = "사용자 이메일", example = "user@example.com")
     private String username;
     /** 비밀번호 (암호화) */
     @Column(name = "password", length = 256, nullable = false)
-    @Schema(description = "비밀번호 (암호화)", example = "$2a$10$...")
     private String password;
     /** 사용자 이름 */
     @Column(length = 50, nullable = false)
-    @Schema(description = "사용자 이름", example = "홍길동")
     private String name;
     /** 전화번호 */
     @Column(length = 20, nullable = false)
-    @Schema(description = "전화번호", example = "01012345678")
     private String phone;
     /** 성별 (M: 남성, F: 여성) */
     @Column(length = 1, nullable = false)
-    @Schema(description = "성별 (M: 남성, F: 여성)", example = "M")
     private String gender;
     /** 생년월일 (YYYYMMDD) */
     @Column(name = "birth_date", length = 8, nullable = false)
-    @Schema(description = "생년월일 (YYYYMMDD)", example = "19900101")
     private String birthDate;
     /** 소셜 로그인 제공자 (예: KA, GO) */
     @Column(length = 2)
@@ -70,7 +62,6 @@ public class User implements UserDetails {
     /** 계정 생성일 */
     @Column(name = "created_at", nullable = false, updatable = false)
     @Builder.Default
-    @Schema(description = "계정 생성일", example = "2025-07-16T09:00:00")
     private LocalDateTime createdAt = LocalDateTime.now();
     /** 계정 수정일 */
     @Column(name = "updated_at")
